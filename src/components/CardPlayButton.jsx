@@ -1,15 +1,18 @@
 import { Pause, Play } from "./Player";
 import { usePlayerStore } from "@/store/playerStore";
 
-export default function CardPlayButton({ id }) {
+export function CardPlayButton({ id, size = "small" }) {
   const { currentMusic, isPlaying, setIsPlaying, setCurrentMusic } =
     usePlayerStore((state) => state);
 
-  const handleClic = () => {
-    if (isPlayingPlayList) {
+  const isPlayingPlaylist = isPlaying && currentMusic?.playlist.id === id;
+
+  const handleClick = () => {
+    if (isPlayingPlaylist) {
       setIsPlaying(false);
       return;
     }
+
     fetch(`/api/get-info-playlist.json?id=${id}`)
       .then((res) => res.json())
       .then((data) => {
@@ -17,20 +20,21 @@ export default function CardPlayButton({ id }) {
 
         setIsPlaying(true);
         setCurrentMusic({ songs, playlist, song: songs[0] });
-
-        console.log({songs, playlist})
       });
-  // console.log(id)
   };
 
-  const isPlayingPlayList = isPlaying && currentMusic?.playlist.id === id;
+  const iconClassName = size === "small" ? "w-4 h-4" : "w-5 h-5";
 
   return (
     <button
-      className="card-play-button rounded-full bg-green-500 p-4"
-      onClick={handleClic}
+      onClick={handleClick}
+      className="card-play-button rounded-full bg-green-500 p-4 hover:scale-105 transition hover:bg-green-400"
     >
-      {isPlayingPlayList ? <Pause /> : <Play />}
+      {isPlayingPlaylist ? (
+        <Pause className={iconClassName} />
+      ) : (
+        <Play className={iconClassName} />
+      )}
     </button>
   );
 }
