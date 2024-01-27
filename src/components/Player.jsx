@@ -1,5 +1,9 @@
 import { useEffect, useRef } from "react";
 import { useState } from "react";
+import { usePlayerStore } from "@/store/playerStore";
+import { Slider } from "@/components/ui/slider";
+
+
 export const Pause = ({ className }) => (
   <svg
     className={className}
@@ -26,26 +30,57 @@ export const Play = ({ className }) => (
   </svg>
 );
 
+
+
+const CurrentSong = ({ image, title, artists }) => {
+  return (
+    <div
+      className={`
+        flex items-center gap-5 relative
+        overflow-hidden
+      `}
+    >
+      <picture className="w-16 h-16 bg-zinc-800 rounded-md shadow-lg overflow-hidden">
+        <img src={image} alt={title} />
+      </picture>
+
+      <div className="flex flex-col">
+        <h3 className="font-semibold text-sm block">{title}</h3>
+        <span className="text-xs opacity-80">{artists?.join(", ")}</span>
+      </div>
+    </div>
+  );
+};
+
 export function Player() {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentSong, setCurrentSong] = useState(null);
   const audioRef = useRef(null);
+  const volumenRef = useRef(1);
+  const { currentMusic, isPlaying, setIsPlaying } = usePlayerStore(
+    (state) => state
+  );
 
   useEffect(() => {
-    audioRef.current.src = "/music/1/01.mp3";
-  }, []);
+    isPlaying ? audioRef.current.play() : audioRef.current.pause();
+  }, [isPlaying]);
 
-  const handleClic = () => {
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
+  useEffect(() => {
+    const { playlist, song, songs } = currentMusic;
+    if (song) {
+      const src = `/music/${playlist?.id}/0${song.id}.mp3`;
+      audioRef.current.src = src;
+      audioRef.current.volume = volumenRef.current;
       audioRef.current.play();
     }
+  }, [currentMusic]);
+
+  const handleClic = () => {
     setIsPlaying(!isPlaying);
   };
   return (
-    <div className="flex flex-row justify-between w-full px-4 z-50">
-      <div>CurrentSong...</div>
+    <div className="flex flex-row justify-between w-full h-full px-4 z-50">
+      <div>
+        <CurrentSong {...currentMusic.song} />
+      </div>
       <div className="grid place-content-center gap-4 flex-1">
         <div className="flex justify-center">
           <button
@@ -56,7 +91,14 @@ export function Player() {
           </button>
         </div>
       </div>
-      <div>Volumen</div>
+      <div className="h-full flex items-center">
+        <Slider defaultValue={[100]} max={100} min={0} className="w-[95px]" onValueChange={(value) => {
+          const [newValue] = value
+          const volumenValue = newValue / 100;
+          volumenRef.current = volumenValue;
+          audioRef.current.volume = volumenValue;
+        }}/>
+      </div>
       <audio ref={audioRef} />
     </div>
   );
