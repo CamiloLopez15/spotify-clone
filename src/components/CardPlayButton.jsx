@@ -1,4 +1,5 @@
-import { Pause, Play } from "./Player";
+import Play from "@/icons/Play";
+import Pause from "@/icons/Pause"
 import { usePlayerStore } from "@/store/playerStore";
 
 export function CardPlayButton({ id, size = "small" }) {
@@ -23,7 +24,8 @@ export function CardPlayButton({ id, size = "small" }) {
       });
   };
 
-  const iconClassName = size === "small" ? "w-4 h-4" : "w-5 h-5";
+  const iconClassName =
+    size === "small text-black" ? "w-4 h-4 text-black" : "w-5 h-5 text-black";
 
   return (
     <button

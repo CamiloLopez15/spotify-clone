@@ -12,8 +12,8 @@
       "@/icons": [
         "src/icons/*"
       ],
-      "@/libs": [
-        "src/libs/*"
+      "@/lib": [
+        "src/lib/*"
       ]
     },
     "jsx": "react-jsx",
