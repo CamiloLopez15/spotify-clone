@@ -1,5 +1,5 @@
 ---
-import type { Album } from "@/lib/data";
+import type { Album } from "@/lib/types";
 import {CardPlayButton} from "./CardPlayButton";
 
 interface Props {
@@ -21,7 +21,7 @@ const artistsString = artists.join(", ");
   <a
   href={`/playlist/${albumId}`}
   class="playlist-item transition-all duration-300 flex relative p-2 overflow-hidden
-  gap-2 pb-6 w-44 flex-col"
+  gap-2 pb-6 lg:w-44 w-36 flex-col"
   transition:name=`playlist ${albumId} box`
 >
   <picture class="aspect-square h-auto w-full flex-none">

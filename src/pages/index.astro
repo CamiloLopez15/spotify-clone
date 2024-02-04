@@ -3,7 +3,8 @@ import PlaylistItemCard from "@/components/PlayListItemCard.astro";
 import Layout from "@/layouts/Layout.astro";
 import Greeting from "@/components/Greeting.svelte";
 
-import { type Album } from "@/lib/data";
+import { type Album } from "@/lib/types";
+import Navbar from "@/components/Navbar.astro";
 
 const getAlbums = async (): Promise<Album[]> => {
     const res = await fetch("http://localhost:8080/api/albums");
@@ -19,12 +20,13 @@ const albums: Album[] = await getAlbums();
     id="playlist-container"
     class="relative transition-all duration-1000 bg-green-600"
   >
+    <Navbar />
     <!-- PageHeader -->
     <div class="relative z-10 px-6 pt-10">
       <!-- Greeating -->
       <Greeting />
 
-      <div class="flex flex-wrap mt-6 gap-4">
+      <div class="flex lg:justify-start lg:items-start justify-center flex-wrap mt-6 gap-4">
         {albums.map((album) => <PlaylistItemCard album={album} />)}
       </div>
     </div>

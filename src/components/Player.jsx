@@ -9,11 +9,13 @@ import VolumeControl from "./Player/VolumeControl";
 
 // Import utils
 import { usePlayerStore } from "@/store/playerStore";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function Player() {
   const { currentMusic, setCurrentMusic, isPlaying, setIsPlaying, volume } =
     usePlayerStore((state) => state);
+
+    const [indexSong, setIndexSong] = useState(0)
 
   const isThereSong =
     currentMusic.playlist === null &&
@@ -38,17 +40,21 @@ export function Player() {
       audioRef.current.volume = volume;
       audioRef.current.play();
       audioRef.current.addEventListener("ended", nextSong);
+      songs.forEach((element, index) => {
+        element.id == song.id ? setIndexSong(index): undefined;
+      });
     }
-  }, [currentMusic]);
+  }, [currentMusic, indexSong]);
 
   const handleClick = () => {
     setIsPlaying(!isPlaying);
   };
 
   const nextSong = () => {
-    const idNextSong = currentMusic.song.id;
-    console.log(currentMusic.song.id, idNextSong);
-    if (idNextSong === currentMusic.songs.length) {
+    const idNextSong = indexSong + 1;
+    console.log(indexSong);
+    if (idNextSong  === currentMusic.songs.length) {
+      setIndexSong(0);
       setCurrentMusic({
         ...currentMusic,
         song: currentMusic.songs[0],
@@ -64,12 +70,13 @@ export function Player() {
   };
 
   const previousSong = () => {
-    const idPreviousSong = currentMusic.song.id - 2;
+    const idPreviousSong = indexSong - 1;
     console.log(currentMusic.song.id, idPreviousSong);
     if (
       idPreviousSong < 0 ||
       idPreviousSong === currentMusic.songs.length - 1
     ) {
+      setIndexSong(0);
       setCurrentMusic({
         ...currentMusic,
         song: currentMusic.songs[currentMusic.songs.length - 1],
@@ -89,7 +96,7 @@ export function Player() {
   return (
     <>
       <div
-        className={`flex-row justify-between w-full h-full px-1 z-50 ${
+        className={`flex-row items-center justify-between w-full h-full px-1 z-50 ${
           isThereSong ? "hidden" : "flex"
         }`}
       >
@@ -99,7 +106,7 @@ export function Player() {
 
         <div className="grid place-content-center gap-4 flex-1">
           <div className="flex justify-center flex-col items-center">
-            <div className="flex justify-evenly w-[30%]">
+            <div className="flex lg:justify-evenly justify-between w-[30%] gap-3 lg:gap-0">
               <button className="text-white" onClick={previousSong}>
                 <PreviousSong />
               </button>
@@ -118,7 +125,7 @@ export function Player() {
           </div>
         </div>
 
-        <div className="grid place-content-center">
+        <div className="hidden lg:grid place-content-center ">
           <VolumeControl />
         </div>
       </div>

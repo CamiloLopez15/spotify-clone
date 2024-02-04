@@ -36,12 +36,12 @@ const albumSongs = await getSongs();
   >
     <!-- <PageHeader /> -->
 
-    <header class="flex flex-row gap-8 px-6 mt-12">
-      <picture class="aspect-square w-52 h-52 flex-none">
+    <header class="flex flex-col lg:justify-start lg:items-start justify-center items-center lg:flex-row gap-8 px-6 mt-12">
+      <picture class="aspect-square lg:w-52 lg:h-52 w-64 h-64 flex-none">
         <img
           src={album?.cover}
           alt={`Cover of ${album?.title}`}
-          class="object-cover w-full h-full shadow-lg"
+          class="object-cover w-full h-full shadow-lg rounded-md"
           transition:name=`playlist ${album?.albumId} image`
         />
       </picture>

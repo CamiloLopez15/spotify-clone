@@ -29,7 +29,7 @@ function SongControl({ audio }) {
   const duration = audio?.current?.duration ?? 0;
 
   return (
-    <div className="flex gap-x-3 text-xs pt-2">
+    <div className="hidden lg:flex gap-x-3 text-xs pt-2">
       <span className="opacity-50 w-12 text-right">
         {formatTime(currentTime)}
       </span>
@@ -38,7 +38,7 @@ function SongControl({ audio }) {
         value={[currentTime]}
         max={audio?.current?.duration ?? 0}
         min={0}
-        className="w-[400px]"
+        className="w-[200px] lg:w-[400px]"
         onValueChange={(value) => {
           const [newCurrentTime] = value;
           audio.current.currentTime = newCurrentTime;

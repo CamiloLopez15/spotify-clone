@@ -17,11 +17,11 @@ const onClickTr = () => {
 ---
 <div class="grid grid-cols-4 grid-rows-[auto] text-left min-w-full">
 
-  <div class="grid col-span-4 grid-cols-[4%_50%_32%_14%] grid-rows-[auto] text-left min-w-full border-b border-gray-500/20 mb-6">
+  <div class="grid col-span-4 grid-cols-[10%_80%] lg:grid-cols-[4%_50%_32%_14%] grid-rows-[auto] text-left min-w-full border-b border-gray-500/20 mb-6">
     <span class="row-span-1 col-span-1 text-sm font-light py-2 px-4">#</span>
     <span class="row-span-1 col-span-1 text-sm font-light py-2 px-4">Título</span>
-    <span class="row-span-1 col-span-1 text-sm font-light py-2 px-4">Álbum</span>
-    <span class="row-span-1 col-span-1 text-sm font-light py-2 px-4"><Time /></span>
+    <span class="row-span-1 col-span-1 text-sm font-light py-2 px-4 hidden lg:flex">Álbum</span>
+    <span class="row-span-1 col-span-1 text-sm font-light py-2 px-4 hidden lg:flex"><Time /></span>
   </div>
 
   {

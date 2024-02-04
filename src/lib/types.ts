@@ -12,8 +12,8 @@ export interface Song {
 export interface Album {
   albumId: number;
   title: string;
-  description: string;
-  created_at: string;
+  description?: string;
+  created_at?: string;
   artists: string[];
   cover: string;
 }
