@@ -5,7 +5,17 @@ import SearchIcon from "@/icons/Search.astro";
 import SideMenuItem from "@/components/SideMenuItem.astro";
 import SideMenuCard from "@/components/SideMenuCard.astro";
 
-import {playlists} from "@/lib/data"
+import { type Album } from "@/lib/data"
+
+
+const getAlbums = async (): Promise<Album[]> => {
+    const res = await fetch('http://localhost:8080/api/albums');
+    const data = await res.json()
+    return data
+}
+
+
+const albums: Album[] = await getAlbums()
 ---
 
 <nav class="flex flex-col flex-1 gap-2">
@@ -28,7 +38,7 @@ import {playlists} from "@/lib/data"
         Tu biblioteca
       </SideMenuItem>
       {
-        playlists.map(playlist => <SideMenuCard playlist={playlist}/>)
+        albums.map((album: Album) => <SideMenuCard album={album}/>)
       }
     </ul>
   </div>

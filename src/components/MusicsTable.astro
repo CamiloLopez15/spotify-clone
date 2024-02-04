@@ -1,13 +1,15 @@
 ---
 import Time from "@/icons/Time.astro"
-import { type Song } from "@/lib/data"
 import MusicTableElements from "@/components/MusicTableElements"
+import { type Album, type Song } from "@/lib/types";
+
 
 interface Props {
-  songs: Song[]
+  songs: Song[],
+  album: Album
 }
 
-const { songs } = Astro.props
+const { songs, album } = Astro.props
 
 const onClickTr = () => {
   console.log("Hola")
@@ -23,6 +25,6 @@ const onClickTr = () => {
   </div>
 
   {
-    songs.map((song, index) => <MusicTableElements song={song} index={index} client:visible/>)
+    songs.map((song, index) => <MusicTableElements  song={song} songs={songs} album={album} index={index} client:visible/>)
   }
 </div>

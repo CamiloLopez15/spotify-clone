@@ -1,6 +1,6 @@
 import { colors } from "./colors";
 
-export interface Playlist {
+export interface Album {
   id: string;
   albumId: number;
   title: string;
@@ -9,7 +9,7 @@ export interface Playlist {
   artists: string[];
 }
 
-export const playlists: Playlist[] = [
+export const playlists: Album[] = [
   {
     id: "1",
     albumId: 1,

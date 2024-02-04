@@ -1,8 +1,17 @@
 ---
-import { playlists } from "@/lib/data";
 import PlaylistItemCard from "@/components/PlayListItemCard.astro";
 import Layout from "@/layouts/Layout.astro";
 import Greeting from "@/components/Greeting.svelte";
+
+import { type Album } from "@/lib/data";
+
+const getAlbums = async (): Promise<Album[]> => {
+    const res = await fetch("http://localhost:8080/api/albums");
+    const data = await res.json();
+    return data;
+};
+
+const albums: Album[] = await getAlbums();
 ---
 
 <Layout title="Spotify-clone">
@@ -16,11 +25,13 @@ import Greeting from "@/components/Greeting.svelte";
       <Greeting />
 
       <div class="flex flex-wrap mt-6 gap-4">
-        {playlists.map((playlist) => <PlaylistItemCard playlist={playlist} />)}
+        {albums.map((album) => <PlaylistItemCard album={album} />)}
       </div>
     </div>
 
-    <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/80 -z-1">
+    <div
+      class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/80 -z-1"
+    >
     </div>
   </div>
 </Layout>
