@@ -6,9 +6,9 @@ import Layout from "@/layouts/Layout.astro";
 import { type Album } from "@/lib/types";
 
 const getAlbums = async (): Promise<Album[]> => {
-    const res = await fetch("http://localhost:8080/api/albums");
-    const data = await res.json();
-    return data;
+  const res = await fetch("http://localhost:8080/api/albums");
+  const data = await res.json();
+  return data;
 };
 
 const albums: Album[] = await getAlbums();
@@ -24,7 +24,9 @@ const albums: Album[] = await getAlbums();
       <!-- Greeating -->
       <!-- <Greeting /> -->
 
-      <div class="flex lg:justify-start lg:items-start justify-center flex-wrap mt-6 gap-4">
+      <div
+        class="flex lg:justify-start lg:items-start justify-center flex-wrap mt-6 gap-4"
+      >
         {albums.map((album) => <PlaylistItemCard album={album} />)}
       </div>
     </div>
@@ -37,3 +39,23 @@ const albums: Album[] = await getAlbums();
 </Layout>
 
 <style></style>
+<script>
+  async function ValidationToken() {
+    try {
+      const storedToken = localStorage.getItem("token");
+      const response = await fetch("http://localhost:8080/api/validation", {
+        headers: {
+          Authorization: `Bearer ${storedToken}`, // Incluir el token en el encabezado de autorización
+        },
+      });
+      const data = await response.json();
+      if (data.error) {
+        window.location.href = "/login";
+      }
+      console.log("Respuesta del servidor:", data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  ValidationToken();
+</script>

@@ -10,14 +10,12 @@ const { id } = Astro.params;
 const getSongs = async (): Promise<Song[]> => {
     const res = await fetch(`http://localhost:8080/api/album/songs/${id}`);
     const data = await res.json();
-    // console.log(data)
     return data;
 };
 
 const getAlbums = async (): Promise<Album[]> => {
     const res = await fetch(`http://localhost:8080/api/albums/${id}`);
     const data = await res.json();
-    // console.log(data)
     return data;
 };
 

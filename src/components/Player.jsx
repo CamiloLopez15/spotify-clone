@@ -52,7 +52,6 @@ export function Player() {
 
   const nextSong = () => {
     const idNextSong = indexSong + 1;
-    console.log(indexSong);
     if (idNextSong  === currentMusic.songs.length) {
       setIndexSong(0);
       setCurrentMusic({
@@ -71,7 +70,6 @@ export function Player() {
 
   const previousSong = () => {
     const idPreviousSong = indexSong - 1;
-    console.log(currentMusic.song.id, idPreviousSong);
     if (
       idPreviousSong < 0 ||
       idPreviousSong === currentMusic.songs.length - 1

@@ -17,10 +17,11 @@ function login() {
         },
         body: JSON.stringify({ email, password }),
       });
-      const { data, error } = await response.json();
+      const { token, error } = await response.json();
       if (error) {
         throw new Error(error);
       }
+      localStorage.setItem("token", token);
       setEmail("");
       setPassword("");
       setError("");
